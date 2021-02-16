@@ -1,17 +1,19 @@
 html
   head
     title= title
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='style.css')
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=Roboto')
   body
-    h1= title
-    hr
+    .container
+        h1.display-2= title
+        hr
 
-    ul
-        each server in servers
-            .server
-                h2= server.name
-                .details
-                    li= 'Players:' + server.players + '/10'
-                    li= 'Version:' + server.gametype
-                    a(href='steam://connect/'+server.addr) Connect
+        ul
+            each server in servers
+                .server
+                    h2= server['name']
+                    .details
+                        li= 'Players:' + server.players + '/10'
+                        li= 'Version:' + server.gametype
+                        li= 'IP: ' + server.addr
+                        a(href='steam://connect/'+server.addr) Connect

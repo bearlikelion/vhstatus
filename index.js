@@ -93,12 +93,27 @@ function sendUsers() {
 //   console.log(`Valheim status at http://localhost:${config.port}`)
 // })
 
+function sortByProperty(property){
+	return function(a,b){
+	   if(a[property] > b[property])
+		  return 1;
+	   else if(a[property] < b[property])
+		  return -1;
+
+	   return 0;
+	}
+ }
+
 app.get('/', function(req, res) {
 	getServerInfo()
 	// res.json(servers);
+
+	servers = [servers]
+	servers[0].sort(sortByProperty("gameport"))
+
 	res.render('index', {
 		title: 'Valheim Server Status',
-		servers: servers
+		servers: servers[0]
 	})
 });
 
