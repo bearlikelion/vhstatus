@@ -6,6 +6,10 @@ body {
 }
 
 a {
+    color: #f2f2f2;
+}
+
+a:hover{
     color: #3498db;
 }
 
@@ -19,5 +23,13 @@ li {
 }
 
 .server {
-    padding-bottom: 25px;
+    padding-bottom: 50px;
+}
+
+footer {
+    text-align: right;
+}
+
+.github {
+    color: #999;
 }
