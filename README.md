@@ -1,4 +1,7 @@
 # vhstatus
+## Updates in progress
+[Example Site](https://friendos.xyz)
+
 vhstatus provides a status page for a dedicated [Valheim](http://valheimgame.com) server.
 It shows a list of online and offline players. To run it you'll need [Node.js](https://nodejs.org/en/) and access to the server log file.
 
