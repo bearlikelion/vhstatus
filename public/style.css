@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+    color: #FFF;
+    background-color: #34495e;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+}
+
+a {
+    color: #3498db;
+}
+
+li {
+    display: inline;
+    padding: 0 1rem;
+}
+
+.server {
+    padding: 25px 0;
+}

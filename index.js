@@ -1,21 +1,49 @@
-const http = require("http")
+// const http = require("http")
+const https = require("https")
 const express = require('express')
 const app = express()
 const fs = require("fs");
-const ws = require('ws');
-let users = {}
+const port = 3000
+// const ws = require('ws');
+// let users = {}
+let servers = {}
 
-app.use(express.static('www'))
+// app.use(express.static('www'))
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'pug')
 
-const server = http.createServer(app);
-const wss = new ws.Server({ server });
+// const server = http.createServer(app);
+// const wss = new ws.Server({ server });
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 
-wss.on('connection', socket => {
-  socket.on('message', message => console.log(message));
-  sendUsers();
-});
+// wss.on('connection', socket => {
+//   socket.on('message', message => console.log(message));
+//   sendUsers();
+//   getServerInfo();
+// });
+
+function getServerInfo() {
+	https.get("https://api.steampowered.com/IGameServersService/GetServerList/v1/?filter=\\gameaddr\\"+config.serverip+"&key="+config.steamkey, (res) =>{
+		let body = "";
+
+		res.on("data", (chunk) => {
+			body += chunk;
+		});
+
+		res.on("end", () => {
+			try{
+				let json = JSON.parse(body);
+				// console.log("JSON: " + json.response.servers)
+				servers = json.response.servers
+			} catch (error) {
+				console.log(error.message)
+			}
+		});
+	}).on("error", (error) => {
+		console.error(error.message)
+	});
+}
 
 function sendUsers() {
 	fs.readFile(config.log, "utf8", (err, data) => {
@@ -59,8 +87,21 @@ function sendUsers() {
 	});
 }
 
-setInterval(sendUsers, config.freq);
+// setInterval(sendUsers, config.freq);
 
-server.listen(config.port, () => {
-  console.log(`Valheim status at http://localhost:${config.port}`)
+// server.listen(config.port, () => {
+//   console.log(`Valheim status at http://localhost:${config.port}`)
+// })
+
+app.get('/', function(req, res) {
+	getServerInfo()
+	// res.json(servers);
+	res.render('index', {
+		title: 'Valheim Server Status',
+		servers: servers
+	})
+});
+
+app.listen(port, () => {
+	console.log('Valheim Status at http://localhost:'+port)
 })
