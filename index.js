@@ -1,5 +1,5 @@
-// const http = require("http")
-const https = require("https")
+const http = require("http")
+// const https = require("https")
 const express = require('express')
 const app = express()
 const fs = require("fs");
@@ -24,7 +24,7 @@ const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 // });
 
 function getServerInfo() {
-	https.get("https://api.steampowered.com/IGameServersService/GetServerList/v1/?filter=\\gameaddr\\"+config.serverip+"&key="+config.steamkey, (res) =>{
+	http.get("http://api.steampowered.com/IGameServersService/GetServerList/v1/?filter=\\gameaddr\\"+config.serverip+"&key="+config.steamkey, (res) =>{
 		let body = "";
 
 		res.on("data", (chunk) => {
