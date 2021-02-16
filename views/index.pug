@@ -13,8 +13,8 @@ html
                 .server
                     h2= server['name']
                     .details
-                        li= 'Players:' + server.players + '/10'
-                        li= 'Version:' + server.gametype
+                        li= 'Players: ' + server.players + '/10'
+                        li= 'Version: ' + server.gametype
                         li= 'IP: ' + server.addr
                         a(href='steam://connect/'+server.addr) Connect
 
